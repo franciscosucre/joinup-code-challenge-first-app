@@ -15,6 +15,7 @@ import {
 } from "@angular/forms";
 import Repository from "../../providers/github-api/models/Repository";
 import { Observable } from "rxjs/Observable";
+import { AlertController } from "ionic-angular";
 
 @Component({
   selector: "page-home",
@@ -29,7 +30,8 @@ export class HomePage {
 
   constructor(
     private formBuilder: FormBuilder,
-    private githubApiProvider: GithubApiProvider
+    private githubApiProvider: GithubApiProvider,
+    private alertCtrl: AlertController
   ) {
     this.form = this.formBuilder.group({
       username: ["", Validators.required, this.userExists.bind(this), "blur"]
@@ -49,9 +51,17 @@ export class HomePage {
     this.repositories = res;
   }
 
-  errorHandler(err) {
+  errorHandler(err: Error) {
     console.log(`HomePage --> errorHandler() --> err`, err);
     this.repositories = [];
+    this.alertCtrl
+      .create({
+        title: "Error",
+        message: err.message,
+        buttons: ["Dismiss"],
+        cssClass: "danger"
+      })
+      .present();
   }
 
   userExists(control: AbstractControl) {
