@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar> <ion-title> Ionic Blank </ion-title> </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h1>The Github repository browser</h1>
+  <ion-item> <p></p> </ion-item>
+  <ion-card>
+    <ion-card-header>
+      Give us a user and will give you it's repositories (And it's little dirty
+      secrets!)
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="submitForm()" [formGroup]="form">
+        <ion-item>
+          <ion-label>Username</ion-label>
+          <ion-input
+            type="text"
+            formControlName="username"
+            [class]="{
+              valid: fieldHasValidClass('username'),
+              invalid: fieldHasInvalidClass('username')
+            }"
+          ></ion-input>
+          <ion-item *ngIf="fieldHasInvalidClass('username')">
+            <p *ngIf="form.get('username').hasError('required')">
+              This field is required
+            </p>
+            <p *ngIf="form.get('username').hasError('userExists')">
+              The user could not be found
+            </p>
+          </ion-item>
+        </ion-item>
+        <button ion-button type="submit" block [disabled]="form.invalid">
+          <span *ngIf="!loading">Submit</span>
+          <ion-spinner *ngIf="loading"></ion-spinner>
+        </button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header> Repository list </ion-card-header>
+    <ion-card-content>
+      <ion-spinner *ngIf="loading"></ion-spinner>
+      <ion-list *ngIf="!loading">
+        <ion-item *ngFor="let repository of repositories">
+          <ion-list-header> {{ repository.full_name }}</ion-list-header>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
