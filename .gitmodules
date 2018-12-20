@@ -1,0 +1,3 @@
+[submodule "src/providers/github-api"]
+	path = src/providers/github-api
+	url = git@github.com:franciscosucre/joinup-code-challenge-github-provider.git
