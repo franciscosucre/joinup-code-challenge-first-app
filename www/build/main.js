@@ -40,12 +40,8 @@ webpackEmptyAsyncContext.id = 179;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operators__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_of__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_observable_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_github_api_github_api__ = __webpack_require__(240);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -58,16 +54,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
 var HomePage = /** @class */ (function () {
     function HomePage(formBuilder, githubApiProvider) {
         this.formBuilder = formBuilder;
         this.githubApiProvider = githubApiProvider;
         this.repositories = [];
         this.loading = false;
+        this.debounceTime = 500;
         this.form = this.formBuilder.group({
-            username: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required, this.userExists.bind(this)]
+            username: ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, this.userExists.bind(this), "blur"]
         });
     }
     HomePage.prototype.fieldHasValidClass = function (key) {
@@ -85,7 +80,17 @@ var HomePage = /** @class */ (function () {
         this.repositories = [];
     };
     HomePage.prototype.userExists = function (control) {
-        return this.githubApiProvider.getUser(control.value).pipe(Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["debounceTime"])(1000), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["map"])(function (res) { return null; }), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["catchError"])(function (val) { return Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_observable_of__["of"])({ userExists: true }); }));
+        var _this = this;
+        clearTimeout(this.debouncer);
+        return new Promise(function (resolve) {
+            _this.debouncer = setTimeout(function () {
+                _this.debouncer = setTimeout(function () {
+                    _this.githubApiProvider
+                        .getUser(control.value)
+                        .subscribe(function (res) { return resolve(res); }, function (err) { return resolve({ usernameInUse: true }); });
+                }, _this.debounceTime);
+            });
+        });
     };
     HomePage.prototype.submitForm = function () {
         console.log("HomePage --> submitForm() --> this.form", this.form);
@@ -95,12 +100,12 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: "page-home",template:/*ion-inline-start:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar> <ion-title> Ionic Blank </ion-title> </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h1>The Github repository browser</h1>\n  <ion-item> <p></p> </ion-item>\n  <ion-card>\n    <ion-card-header>\n      Give us a user and will give you it\'s repositories (And it\'s little dirty\n      secrets!)\n    </ion-card-header>\n    <ion-card-content>\n      <form (ngSubmit)="submitForm()" [formGroup]="form">\n        <ion-item>\n          <ion-label>Username</ion-label>\n          <ion-input\n            type="text"\n            formControlName="username"\n            [class]="{\n              valid: fieldHasValidClass(\'username\'),\n              invalid: fieldHasInvalidClass(\'username\')\n            }"\n          ></ion-input>\n          <ion-item *ngIf="fieldHasInvalidClass(\'username\')">\n            <p *ngIf="form.get(\'username\').hasError(\'required\')">\n              This field is required\n            </p>\n            <p *ngIf="form.get(\'username\').hasError(\'userExists\')">\n              The user could not be found\n            </p>\n          </ion-item>\n        </ion-item>\n        <button ion-button type="submit" block [disabled]="form.invalid">\n          <span *ngIf="!loading">Submit</span>\n          <ion-spinner *ngIf="loading"></ion-spinner>\n        </button>\n      </form>\n    </ion-card-content>\n  </ion-card>\n\n  <ion-card>\n    <ion-card-header> Repository list </ion-card-header>\n    <ion-card-content>\n      <ion-spinner *ngIf="loading"></ion-spinner>\n      <ion-list *ngIf="!loading">\n        <ion-item *ngFor="let repository of repositories">\n          <ion-list-header> {{ repository.full_name }}</ion-list-header>\n        </ion-item>\n      </ion-list>\n    </ion-card-content>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/
+            selector: "page-home",template:/*ion-inline-start:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar> <ion-title> Ionic Blank </ion-title> </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h1>The Github repository browser</h1>\n  <ion-item> <p></p> </ion-item>\n  <ion-card>\n    <ion-card-header>\n      Give us a user and will give you it\'s repositories (And it\'s little dirty\n      secrets!)\n    </ion-card-header>\n    <ion-card-content>\n      <form (ngSubmit)="submitForm()" [formGroup]="form">\n        <ion-item>\n          <ion-label\n            color="{{\n              fieldHasInvalidClass(\'username\') ? \'danger\' : \'primary\'\n            }}"\n            >Username</ion-label\n          >\n          <ion-input\n            type="text"\n            formControlName="username"\n            [class]="{\n              valid: fieldHasValidClass(\'username\'),\n              invalid: fieldHasInvalidClass(\'username\')\n            }"\n          ></ion-input>\n          <div class="danger" *ngIf="fieldHasInvalidClass(\'username\')">\n            <p *ngIf="form.get(\'username\').hasError(\'required\')">\n              This field is required\n            </p>\n            <p *ngIf="form.get(\'username\').hasError(\'userExists\')">\n              The user could not be found\n            </p>\n          </div>\n        </ion-item>\n        <button ion-button type="submit" block [disabled]="form.invalid">\n          <span *ngIf="!loading">Submit</span>\n          <ion-spinner *ngIf="loading"></ion-spinner>\n        </button>\n      </form>\n    </ion-card-content>\n  </ion-card>\n\n  <ion-card>\n    <ion-card-header> Repository list </ion-card-header>\n    <ion-card-content>\n      <ion-spinner *ngIf="loading"></ion-spinner>\n      <ion-list *ngIf="!loading">\n        <ion-item *ngFor="let repository of repositories">\n          <ion-list-header> {{ repository.full_name }}</ion-list-header>\n        </ion-item>\n      </ion-list>\n    </ion-card-content>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_github_api_github_api__["a" /* GithubApiProvider */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__["a" /* GithubApiProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__["a" /* GithubApiProvider */]) === "function" && _b || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=home.js.map
