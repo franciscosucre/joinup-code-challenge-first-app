@@ -1,11 +1,4 @@
 import { Component } from "@angular/core";
-import {
-  debounceTime,
-  map,
-  catchError,
-  distinctUntilChanged
-} from "rxjs/operators";
-import { of } from "rxjs/observable/of";
 import { GithubApiProvider } from "../../providers/github-api/github-api";
 import {
   FormBuilder,
@@ -14,7 +7,6 @@ import {
   AbstractControl
 } from "@angular/forms";
 import Repository from "../../providers/github-api/models/Repository";
-import { Observable } from "rxjs/Observable";
 import { AlertController } from "ionic-angular";
 
 @Component({
@@ -47,12 +39,10 @@ export class HomePage {
   }
 
   successHandler(res: Repository[]) {
-    console.log(`HomePage --> successHandler() --> res`, res);
     this.repositories = res;
   }
 
   errorHandler(err: Error) {
-    console.log(`HomePage --> errorHandler() --> err`, err);
     this.repositories = [];
     this.alertCtrl
       .create({
@@ -79,7 +69,6 @@ export class HomePage {
   }
 
   submitForm() {
-    console.log(`HomePage --> submitForm() --> this.form`, this.form);
     this.githubApiProvider
       .getRepositories(this.form.value.username)
       .subscribe(this.successHandler.bind(this), this.errorHandler.bind(this));
