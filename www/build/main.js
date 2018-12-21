@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 134:
+/***/ 110:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -13,11 +13,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 134;
+webpackEmptyAsyncContext.id = 110;
 
 /***/ }),
 
-/***/ 179:
+/***/ 152:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -30,19 +30,19 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 179;
+webpackEmptyAsyncContext.id = 152;
 
 /***/ }),
 
-/***/ 223:
+/***/ 196:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__ = __webpack_require__(240);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(54);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -75,11 +75,9 @@ var HomePage = /** @class */ (function () {
         return this.form.get(key).invalid && this.form.touched;
     };
     HomePage.prototype.successHandler = function (res) {
-        console.log("HomePage --> successHandler() --> res", res);
         this.repositories = res;
     };
     HomePage.prototype.errorHandler = function (err) {
-        console.log("HomePage --> errorHandler() --> err", err);
         this.repositories = [];
         this.alertCtrl
             .create({
@@ -95,40 +93,38 @@ var HomePage = /** @class */ (function () {
         clearTimeout(this.debouncer);
         return new Promise(function (resolve) {
             _this.debouncer = setTimeout(function () {
-                _this.debouncer = setTimeout(function () {
-                    _this.githubApiProvider
-                        .getUser(control.value)
-                        .subscribe(function (res) { return resolve(res); }, function (err) { return resolve({ usernameInUse: true }); });
-                }, _this.debounceTime);
-            });
+                _this.githubApiProvider
+                    .getUser(control.value)
+                    .subscribe(function (res) { return resolve(res); }, function (err) { return resolve({ usernameInUse: true }); });
+            }, _this.debounceTime);
         });
     };
     HomePage.prototype.submitForm = function () {
-        console.log("HomePage --> submitForm() --> this.form", this.form);
         this.githubApiProvider
             .getRepositories(this.form.value.username)
             .subscribe(this.successHandler.bind(this), this.errorHandler.bind(this));
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: "page-home",template:/*ion-inline-start:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar> <ion-title> Ionic Blank </ion-title> </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h1>The Github repository browser</h1>\n  <ion-item> <p></p> </ion-item>\n  <ion-card>\n    <ion-card-header>\n      Give us a user and will give you it\'s repositories (And it\'s little dirty\n      secrets!)\n    </ion-card-header>\n    <ion-card-content>\n      <form (ngSubmit)="submitForm()" [formGroup]="form">\n        <ion-item>\n          <ion-label\n            color="{{\n              fieldHasInvalidClass(\'username\') ? \'danger\' : \'primary\'\n            }}"\n            >Username</ion-label\n          >\n          <ion-input\n            type="text"\n            formControlName="username"\n            [class]="{\n              valid: fieldHasValidClass(\'username\'),\n              invalid: fieldHasInvalidClass(\'username\')\n            }"\n          ></ion-input>\n          <div class="danger" *ngIf="fieldHasInvalidClass(\'username\')">\n            <p *ngIf="form.get(\'username\').hasError(\'required\')">\n              This field is required\n            </p>\n            <p *ngIf="form.get(\'username\').hasError(\'userExists\')">\n              The user could not be found\n            </p>\n          </div>\n        </ion-item>\n        <button ion-button type="submit" block [disabled]="form.invalid">\n          <span *ngIf="!loading">Submit</span>\n          <ion-spinner *ngIf="loading"></ion-spinner>\n        </button>\n      </form>\n    </ion-card-content>\n  </ion-card>\n\n  <ion-card>\n    <ion-card-header> Repository list </ion-card-header>\n    <ion-card-content>\n      <ion-spinner *ngIf="loading"></ion-spinner>\n      <ion-list *ngIf="!loading">\n        <ion-item *ngFor="let repository of repositories">\n          <ion-list-header> {{ repository.full_name }}</ion-list-header>\n        </ion-item>\n      </ion-list>\n    </ion-card-content>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/
+            selector: "page-home",template:/*ion-inline-start:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title> The Incredible User Repository Lister </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h1>Search for a user</h1>\n  <ion-item> <p></p> </ion-item>\n  <ion-card>\n    <ion-card-header>\n      <p>We\'ll give you it\'s repositories</p>\n      <p>(And it\'s little dirty secrets!)</p>\n    </ion-card-header>\n    <ion-card-content>\n      <form (ngSubmit)="submitForm()" [formGroup]="form">\n        <ion-item>\n          <ion-label\n            color="{{\n              fieldHasInvalidClass(\'username\') ? \'danger\' : \'primary\'\n            }}"\n            >Username</ion-label\n          >\n          <ion-input\n            type="text"\n            formControlName="username"\n            [class]="{\n              valid: fieldHasValidClass(\'username\'),\n              invalid: fieldHasInvalidClass(\'username\')\n            }"\n          ></ion-input>\n          <div class="danger" *ngIf="fieldHasInvalidClass(\'username\')">\n            <p *ngIf="form.get(\'username\').hasError(\'required\')">\n              This field is required\n            </p>\n            <p *ngIf="form.get(\'username\').hasError(\'userExists\')">\n              The user could not be found\n            </p>\n          </div>\n        </ion-item>\n        <button ion-button type="submit" block [disabled]="form.invalid">\n          <span *ngIf="!loading">Submit</span>\n          <ion-spinner *ngIf="loading"></ion-spinner>\n        </button>\n      </form>\n    </ion-card-content>\n  </ion-card>\n\n  <ion-card>\n    <ion-card-header> Repository list </ion-card-header>\n    <ion-card-content>\n      <ion-spinner *ngIf="loading"></ion-spinner>\n      <ion-list *ngIf="!loading">\n        <ion-item *ngFor="let repository of repositories">\n          <ion-item>\n            <ion-avatar item-left>\n              <img\n                src="{{ repository.owner.avatar_url }}"\n                *ngIf="repository.owner.avatar_url"\n              />\n              <img\n                src="assets/imgs/github.png"\n                *ngIf="!repository.owner.avatar_url"\n              />\n            </ion-avatar>\n            <h2>{{ repository.full_name }}</h2>\n            <p>{{ repository.description }}</p>\n          </ion-item>\n        </ion-item>\n      </ion-list>\n    </ion-card-content>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/home/francisco/Repositories/JoinUpCodeChallenge/githubUserRepositoryBrowser/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__["a" /* GithubApiProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__["a" /* GithubApiProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_1__providers_github_api_github_api__["a" /* GithubApiProvider */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */]])
     ], HomePage);
     return HomePage;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 240:
+/***/ 197:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GithubApiProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -150,12 +146,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var GithubApiProvider = /** @class */ (function () {
     function GithubApiProvider(http) {
         this.http = http;
-        this.url = "https://api.github.com";
-        this.version = "v3";
-        console.log("Hello GithubApiProvider Provider");
+        this.url = 'https://api.github.com';
+        this.version = 'v3';
+        console.log('Hello GithubApiProvider Provider');
     }
     GithubApiProvider.prototype.getAcceptHeader = function () {
         return "application/vnd.github." + this.version + "+json";
+    };
+    GithubApiProvider.prototype.searchRepositories = function (searchTerm, per_page, page) {
+        return this.http.get(this.url + "/search/repositories", {
+            headers: {
+                Accept: this.getAcceptHeader()
+            },
+            params: {
+                q: searchTerm,
+                per_page: per_page ? per_page.toString() : '1',
+                page: page ? page.toString() : '10'
+            }
+        });
     };
     GithubApiProvider.prototype.getRepositories = function (username) {
         return this.http.get(this.url + "/users/" + username + "/repos", {
@@ -182,13 +190,13 @@ var GithubApiProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 242:
+/***/ 199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(220);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -196,20 +204,20 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 250:
+/***/ 220:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(222);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(296);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_github_api__ = __webpack_require__(397);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_github_api__ = __webpack_require__(275);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -252,16 +260,16 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 296:
+/***/ 269:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(222);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(196);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -298,16 +306,16 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 397:
+/***/ 275:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__github_api__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__github_api__ = __webpack_require__(197);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__github_api__["a"]; });
 
 //# sourceMappingURL=index.js.map
 
 /***/ })
 
-},[242]);
+},[199]);
 //# sourceMappingURL=main.js.map

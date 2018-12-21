@@ -61,7 +61,7 @@ export class HomePage {
         this.githubApiProvider
           .getUser(control.value)
           .subscribe(
-            res => resolve(res),
+            res => resolve(null),
             err => resolve({ usernameInUse: true })
           );
       }, this.debounceTime);

@@ -1,14 +1,16 @@
 <ion-header>
-  <ion-navbar> <ion-title> Ionic Blank </ion-title> </ion-navbar>
+  <ion-navbar>
+    <ion-title> The Incredible User Repository Lister </ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h1>The Github repository browser</h1>
+  <h1>Search for a user</h1>
   <ion-item> <p></p> </ion-item>
   <ion-card>
     <ion-card-header>
-      Give us a user and will give you it's repositories (And it's little dirty
-      secrets!)
+      <p>We'll give you it's repositories</p>
+      <p>(And it's little dirty secrets!)</p>
     </ion-card-header>
     <ion-card-content>
       <form (ngSubmit)="submitForm()" [formGroup]="form">
@@ -50,7 +52,20 @@
       <ion-spinner *ngIf="loading"></ion-spinner>
       <ion-list *ngIf="!loading">
         <ion-item *ngFor="let repository of repositories">
-          <ion-list-header> {{ repository.full_name }}</ion-list-header>
+          <ion-item>
+            <ion-avatar item-left>
+              <img
+                src="{{ repository.owner.avatar_url }}"
+                *ngIf="repository.owner.avatar_url"
+              />
+              <img
+                src="assets/imgs/github.png"
+                *ngIf="!repository.owner.avatar_url"
+              />
+            </ion-avatar>
+            <h2>{{ repository.full_name }}</h2>
+            <p>{{ repository.description }}</p>
+          </ion-item>
         </ion-item>
       </ion-list>
     </ion-card-content>
