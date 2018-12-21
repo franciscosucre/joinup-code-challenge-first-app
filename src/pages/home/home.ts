@@ -58,15 +58,13 @@ export class HomePage {
     clearTimeout(this.debouncer);
     return new Promise(resolve => {
       this.debouncer = setTimeout(() => {
-        this.debouncer = setTimeout(() => {
-          this.githubApiProvider
-            .getUser(control.value)
-            .subscribe(
-              res => resolve(res),
-              err => resolve({ usernameInUse: true })
-            );
-        }, this.debounceTime);
-      });
+        this.githubApiProvider
+          .getUser(control.value)
+          .subscribe(
+            res => resolve(res),
+            err => resolve({ usernameInUse: true })
+          );
+      }, this.debounceTime);
     });
   }
 
